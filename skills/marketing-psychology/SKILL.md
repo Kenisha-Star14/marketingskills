@@ -453,3 +453,4 @@ When facing a marketing challenge, consider:
 - **popups**: Use triggers and psychology in popups
 - **pricing-page optimization**: See cro for pricing psychology
 - **ab-testing**: Test psychological hypotheses
+Note added by Kenisha as a test.

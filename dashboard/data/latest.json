@@ -1,0 +1,9 @@
+{
+  "fetchedAt": "2026-07-13T20:48:18.730Z",
+  "windowDays": 14,
+  "errors": [
+    "meta — META_PAGE_TOKEN not set (see dashboard/SETUP.md)",
+    "threads — THREADS_ACCESS_TOKEN not set (see dashboard/SETUP.md)",
+    "youtube — YOUTUBE_API_KEY not set (see dashboard/SETUP.md)"
+  ]
+}

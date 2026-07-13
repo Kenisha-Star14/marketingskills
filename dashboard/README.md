@@ -29,6 +29,15 @@ Threads, X (Twitter), and YouTube.
 
 ## Data source
 
-Metricool MCP, brand "The WELL Co." (brandId 6436168, timezone
-America/Los_Angeles). Engagement figures are interactions per 100 people reached
-(the brand's configured engagement ratio). Data window is a rolling 14 days.
+**Primary (independent):** `fetch-data.js` pulls directly from the platforms'
+own free APIs — Meta Graph API (Instagram + Facebook), Threads API, and
+YouTube Data API — using credentials stored as environment variables. See
+`SETUP.md` for the one-time account connection. No subscriptions required.
+
+**Fallback:** while the direct connection is not yet configured, the daily
+refresh uses the Metricool MCP (brand "The WELL Co.", brandId 6436168) if the
+account is still active.
+
+Engagement figures are interactions per 100 people reached. Data window is a
+rolling 14 days. TikTok and X are not covered by the independent setup (TikTok
+requires developer-program approval; X's analytics API is paid-only).

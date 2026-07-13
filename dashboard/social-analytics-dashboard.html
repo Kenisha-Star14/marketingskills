@@ -1,0 +1,730 @@
+<title>The WELL Co. — Social Analytics</title>
+<style>
+  :root {
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --accent: #2a78d6;
+    --up-good: #006300;
+    --down-bad: #b3261e;
+    --chip-good-ink: #005c00;   --chip-good-bg: rgba(12, 163, 12, 0.12);
+    --chip-warn-ink: #7a5200;   --chip-warn-bg: rgba(250, 178, 25, 0.16);
+    --chip-serious-ink: #8a3a1b;--chip-serious-bg: rgba(236, 131, 90, 0.16);
+    --chip-neutral-ink: #52514e;--chip-neutral-bg: rgba(11, 11, 11, 0.06);
+    --s-instagram: #2a78d6;
+    --s-tiktok: #1baf7a;
+    --s-facebook: #eda100;
+    --s-threads: #008300;
+    --s-twitter: #4a3aa7;
+    --s-youtube: #e34948;
+    --de-emphasis: #c3c2b7;
+    --tooltip-bg: #0b0b0b;
+    --tooltip-ink: #fcfcfb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --accent: #3987e5;
+      --up-good: #0ca30c;
+      --down-bad: #e66767;
+      --chip-good-ink: #7ed67e;   --chip-good-bg: rgba(12, 163, 12, 0.18);
+      --chip-warn-ink: #fac95e;   --chip-warn-bg: rgba(250, 178, 25, 0.14);
+      --chip-serious-ink: #f0a181;--chip-serious-bg: rgba(236, 131, 90, 0.14);
+      --chip-neutral-ink: #c3c2b7;--chip-neutral-bg: rgba(255, 255, 255, 0.07);
+      --s-instagram: #3987e5;
+      --s-tiktok: #199e70;
+      --s-facebook: #c98500;
+      --s-threads: #008300;
+      --s-twitter: #9085e9;
+      --s-youtube: #e66767;
+      --de-emphasis: #4a4a47;
+      --tooltip-bg: #fcfcfb;
+      --tooltip-ink: #0b0b0b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --accent: #3987e5;
+    --up-good: #0ca30c;
+    --down-bad: #e66767;
+    --chip-good-ink: #7ed67e;   --chip-good-bg: rgba(12, 163, 12, 0.18);
+    --chip-warn-ink: #fac95e;   --chip-warn-bg: rgba(250, 178, 25, 0.14);
+    --chip-serious-ink: #f0a181;--chip-serious-bg: rgba(236, 131, 90, 0.14);
+    --chip-neutral-ink: #c3c2b7;--chip-neutral-bg: rgba(255, 255, 255, 0.07);
+    --s-instagram: #3987e5;
+    --s-tiktok: #199e70;
+    --s-facebook: #c98500;
+    --s-threads: #008300;
+    --s-twitter: #9085e9;
+    --s-youtube: #e66767;
+    --de-emphasis: #4a4a47;
+    --tooltip-bg: #fcfcfb;
+    --tooltip-ink: #0b0b0b;
+  }
+  :root[data-theme="light"] {
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --accent: #2a78d6;
+    --up-good: #006300;
+    --down-bad: #b3261e;
+    --chip-good-ink: #005c00;   --chip-good-bg: rgba(12, 163, 12, 0.12);
+    --chip-warn-ink: #7a5200;   --chip-warn-bg: rgba(250, 178, 25, 0.16);
+    --chip-serious-ink: #8a3a1b;--chip-serious-bg: rgba(236, 131, 90, 0.16);
+    --chip-neutral-ink: #52514e;--chip-neutral-bg: rgba(11, 11, 11, 0.06);
+    --s-instagram: #2a78d6;
+    --s-tiktok: #1baf7a;
+    --s-facebook: #eda100;
+    --s-threads: #008300;
+    --s-twitter: #4a3aa7;
+    --s-youtube: #e34948;
+    --de-emphasis: #c3c2b7;
+    --tooltip-bg: #0b0b0b;
+    --tooltip-ink: #fcfcfb;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* ---------- header ---------- */
+  header.masthead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 6px; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+  h1 { font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--muted); font-size: 12.5px; margin-bottom: 28px; }
+  .meta-row strong { color: var(--ink-2); font-weight: 600; }
+
+  section { margin-bottom: 36px; }
+  h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.005em; }
+  .section-sub { color: var(--muted); font-size: 12.5px; margin: 0 0 14px; }
+
+  /* ---------- KPI row ---------- */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .kpi {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px 12px;
+  }
+  .kpi .label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  .kpi .value { font-size: 30px; font-weight: 650; line-height: 1.15; margin-top: 2px; }
+  .kpi.lead .value { font-size: 40px; }
+  .kpi .delta { font-size: 12.5px; font-weight: 600; margin-top: 2px; }
+  .kpi .delta small { font-weight: 400; color: var(--muted); }
+  .delta.up { color: var(--up-good); }
+  .delta.down { color: var(--down-bad); }
+  .delta.flat { color: var(--muted); }
+
+  /* ---------- platform cards ---------- */
+  .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+  .pcard {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .pcard .top { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .pname { font-weight: 700; font-size: 14px; }
+  .phandle { color: var(--muted); font-size: 12px; }
+  .chip {
+    margin-left: auto; font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
+    padding: 3px 9px; border-radius: 99px; white-space: nowrap;
+  }
+  .chip.good { color: var(--chip-good-ink); background: var(--chip-good-bg); }
+  .chip.warn { color: var(--chip-warn-ink); background: var(--chip-warn-bg); }
+  .chip.serious { color: var(--chip-serious-ink); background: var(--chip-serious-bg); }
+  .chip.neutral { color: var(--chip-neutral-ink); background: var(--chip-neutral-bg); }
+  .pcard .mid { display: flex; align-items: flex-end; gap: 16px; }
+  .bignum { font-size: 28px; font-weight: 650; line-height: 1; }
+  .bignum .unit { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .spark { margin-left: auto; }
+  .pstats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; border-top: 1px solid var(--grid); padding-top: 10px; }
+  .pstat .k { font-size: 11px; color: var(--muted); }
+  .pstat .v { font-size: 14px; font-weight: 650; }
+  .pstat .v small { font-weight: 500; color: var(--muted); font-size: 11px; }
+
+  /* ---------- charts ---------- */
+  .chart-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px 10px; margin-bottom: 12px;
+  }
+  .chart-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-bottom: 4px; }
+  .chart-title { font-size: 14px; font-weight: 700; }
+  .chart-note { font-size: 12px; color: var(--muted); }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 6px 0 4px; font-size: 12px; color: var(--ink-2); }
+  .legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .swatch { width: 14px; height: 3px; border-radius: 2px; }
+  .chart-box { position: relative; }
+  .chart-box svg { display: block; width: 100%; height: auto; }
+  .tooltip {
+    position: absolute; pointer-events: none; display: none; z-index: 5;
+    background: var(--tooltip-bg); color: var(--tooltip-ink);
+    border-radius: 7px; padding: 8px 10px; font-size: 12px; line-height: 1.45;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.22); min-width: 130px;
+  }
+  .tooltip .tt-date { font-weight: 700; margin-bottom: 3px; }
+  .tooltip .tt-row { display: flex; align-items: center; gap: 6px; }
+  .tooltip .tt-row .sw { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .tooltip .tt-row .nm { opacity: 0.75; }
+  .tooltip .tt-row .vl { margin-left: auto; font-weight: 650; font-variant-numeric: tabular-nums; padding-left: 10px; }
+  details.tbl { margin: 2px 0 6px; }
+  details.tbl summary { cursor: pointer; font-size: 12px; color: var(--muted); user-select: none; }
+  details.tbl summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .data-table-wrap { overflow-x: auto; margin-top: 8px; }
+  table.data { border-collapse: collapse; font-size: 12.5px; min-width: 480px; }
+  table.data th, table.data td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  table.data th:first-child, table.data td:first-child { text-align: left; }
+  table.data th { color: var(--muted); font-weight: 600; font-size: 11.5px; }
+
+  /* ---------- content leaderboard ---------- */
+  .content-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  table.content { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13px; }
+  table.content th {
+    text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--muted); padding: 12px 14px 8px; border-bottom: 1px solid var(--grid); white-space: nowrap;
+  }
+  table.content td { padding: 11px 14px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  table.content tr:last-child td { border-bottom: none; }
+  table.content .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  table.content th.num { text-align: right; }
+  .post-title { font-weight: 650; max-width: 330px; }
+  .post-sub { color: var(--muted); font-size: 12px; margin-top: 1px; }
+  .rankpill { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .eng-hi { color: var(--up-good); font-weight: 700; }
+  .eng-lo { color: var(--down-bad); font-weight: 700; }
+
+  /* ---------- recommendations ---------- */
+  .recs { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 12px; }
+  .rec {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; border-left: 3px solid var(--accent);
+  }
+  .rec.warn { border-left-color: var(--chip-warn-ink); }
+  .rec.good { border-left-color: var(--chip-good-ink); }
+  .rec h3 { margin: 0 0 4px; font-size: 13.5px; font-weight: 700; }
+  .rec p { margin: 0; color: var(--ink-2); font-size: 13px; }
+  .rec p + p { margin-top: 6px; }
+  .rec .evidence { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--grid); color: var(--muted); font-size: 12px; }
+  footer p { margin: 4px 0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .kpi, .pcard, .chart-card, .rec { transition: border-color 120ms ease; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <span class="brand">The WELL Co.</span>
+    <h1>Social media performance</h1>
+  </header>
+  <div class="meta-row">
+    <span><strong>This week:</strong> Jul 6 – 12, 2026 · compared to Jun 29 – Jul 5</span>
+    <span><strong>Updated:</strong> Jul 13, 2026 · data via Metricool</span>
+    <span>Jul 13 is in progress and excluded from weekly totals</span>
+  </div>
+
+  <!-- ============ KPI row ============ -->
+  <section aria-label="Key metrics">
+    <div class="kpis">
+      <div class="kpi lead">
+        <div class="label">Total audience</div>
+        <div class="value">384</div>
+        <div class="delta up">+15 this week <small>· same pace as last week</small></div>
+      </div>
+      <div class="kpi">
+        <div class="label">Views</div>
+        <div class="value">5,196</div>
+        <div class="delta up">+58% <small>vs 3,293</small></div>
+      </div>
+      <div class="kpi">
+        <div class="label">Interactions</div>
+        <div class="value">87</div>
+        <div class="delta down">−60% <small>vs 219</small></div>
+      </div>
+      <div class="kpi">
+        <div class="label">Posts published</div>
+        <div class="value">19</div>
+        <div class="delta flat">vs 28 <small>· 4-day gap Jul 5–8</small></div>
+      </div>
+      <div class="kpi">
+        <div class="label">Best day</div>
+        <div class="value">Jul 10</div>
+        <div class="delta flat">1,458 IG views <small>· frozen-shoulder reel</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ platform cards ============ -->
+  <section aria-label="Platforms">
+    <h2>Platforms</h2>
+    <p class="section-sub">Follower trend over the last 14 days. Weekly figures are Jul 6–12 vs Jun 29–Jul 5.</p>
+    <div class="platforms" id="platform-cards"></div>
+  </section>
+
+  <!-- ============ charts ============ -->
+  <section aria-label="Daily trends">
+    <h2>Daily trends</h2>
+    <p class="section-sub">Hover or tap a chart for exact daily values. Gaps mean no data was recorded that day.</p>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <span class="chart-title">Views per day</span>
+        <span class="chart-note">Instagram account views · Facebook page media views · Threads post views (TikTok does not report daily views)</span>
+      </div>
+      <div class="legend" id="legend-views"></div>
+      <div class="chart-box" id="chart-views"></div>
+      <details class="tbl">
+        <summary>View as table</summary>
+        <div class="data-table-wrap" id="table-views"></div>
+      </details>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <span class="chart-title">Interactions per day — TikTok highlighted</span>
+        <span class="chart-note">Likes, comments, saves and shares. TikTok fell from 136 to 23 per week when content shifted from personal story to research citations.</span>
+      </div>
+      <div class="legend" id="legend-int"></div>
+      <div class="chart-box" id="chart-int"></div>
+      <details class="tbl">
+        <summary>View as table</summary>
+        <div class="data-table-wrap" id="table-int"></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ content ============ -->
+  <section aria-label="Content performance">
+    <h2>Content: what worked and what didn&rsquo;t</h2>
+    <p class="section-sub">The same video is posted to Instagram, TikTok and Facebook, so each row compares one piece of content across platforms. Engagement = interactions per 100 people reached.</p>
+    <div class="content-wrap">
+      <table class="content">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Post</th>
+            <th class="num">IG reach</th>
+            <th class="num">IG eng.</th>
+            <th class="num">TikTok views</th>
+            <th class="num">TT eng.</th>
+            <th class="num">FB views</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rankpill">TOP</td>
+            <td><div class="post-title">&ldquo;I was medicated for a disease I never had&rdquo; — thyroid misdiagnosis story</div><div class="post-sub">Jul 1 · personal story</div></td>
+            <td class="num">368</td><td class="num eng-hi">8.4</td>
+            <td class="num">592</td><td class="num eng-hi">7.4</td>
+            <td class="num">290</td>
+          </tr>
+          <tr>
+            <td class="rankpill">TOP</td>
+            <td><div class="post-title">Frozen shoulder &amp; estrogen — &ldquo;not random bad luck&rdquo;</div><div class="post-sub">Jul 10 · science + advocacy</div></td>
+            <td class="num">1,157</td><td class="num">3.1</td>
+            <td class="num">286</td><td class="num">3.1</td>
+            <td class="num">251</td>
+          </tr>
+          <tr>
+            <td class="rankpill">TOP</td>
+            <td><div class="post-title">LIFTMOR trial — lift heavy, not &ldquo;toning&rdquo;</div><div class="post-sub">Jul 11 · science + myth-bust</div></td>
+            <td class="num">1,172</td><td class="num">2.4</td>
+            <td class="num">315</td><td class="num">3.2</td>
+            <td class="num">273</td>
+          </tr>
+          <tr>
+            <td class="rankpill">TOP</td>
+            <td><div class="post-title">D1 athlete to a body I don&rsquo;t recognize</div><div class="post-sub">Jun 30 · personal story — highest engagement rate anywhere: 20.6 on IG</div></td>
+            <td class="num">102</td><td class="num eng-hi">20.6</td>
+            <td class="num">407</td><td class="num eng-hi">8.6</td>
+            <td class="num">119</td>
+          </tr>
+          <tr>
+            <td class="rankpill">LOW</td>
+            <td><div class="post-title">Musculoskeletal Syndrome of Menopause — study explainer</div><div class="post-sub">Jul 9 · citation-heavy, no personal angle</div></td>
+            <td class="num">281</td><td class="num eng-lo">2.0</td>
+            <td class="num">207</td><td class="num eng-lo">1.0</td>
+            <td class="num">237</td>
+          </tr>
+          <tr>
+            <td class="rankpill">LOW</td>
+            <td><div class="post-title">Creatine for postmenopausal women</div><div class="post-sub">Jul 12 · note: best Facebook video of the fortnight (519 views)</div></td>
+            <td class="num">191</td><td class="num eng-lo">2.7</td>
+            <td class="num">110</td><td class="num eng-lo">1.8</td>
+            <td class="num">519</td>
+          </tr>
+          <tr>
+            <td class="rankpill">LOW</td>
+            <td><div class="post-title">&ldquo;This part is for you&rdquo; — program invitation / CTA</div><div class="post-sub">Jul 4 · pure call-to-action, no story or science</div></td>
+            <td class="num">53</td><td class="num">13.9*</td>
+            <td class="num">246</td><td class="num">2.8</td>
+            <td class="num">265</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-sub" style="margin-top:8px">*High rate on a very small reach (53 people) — not meaningful. Threads (text-only) is separate: practical protocol posts led — ferritin levels 316 views, &ldquo;tea person&rdquo; confession 192 — while every &ldquo;comment GUIDE/STRONG&rdquo; CTA post recorded near-zero views.</p>
+  </section>
+
+  <!-- ============ recommendations ============ -->
+  <section aria-label="Recommendations">
+    <h2>What to do next</h2>
+    <p class="section-sub">Written from this fortnight&rsquo;s numbers, not generic advice.</p>
+    <div class="recs">
+      <div class="rec good">
+        <h3>Instagram is breaking out — feed it</h3>
+        <p>Account reach quadrupled this week (518 → 2,105) on the strength of the science reels: frozen shoulder and LIFTMOR each reached ~1,150+, five times your usual. The algorithm is testing you with a wider audience right now.</p>
+        <p><strong>Do:</strong> hold a daily reel cadence for the next 2 weeks — momentum decays fast once you stop. The Jul 5–8 gap shows it: those four days were your lowest-reach days of the fortnight.</p>
+        <div class="evidence">Evidence: IG views +304% w/w · followers +7 · reach on science reels 1,157 and 1,172 vs ~50–200 typical</div>
+      </div>
+      <div class="rec warn">
+        <h3>TikTok wants your story, not your citations</h3>
+        <p>Week 1 (personal story arc) averaged ~7.7% engagement and 136 interactions. Week 2 (research explainers) averaged ~2.3% and 23. Same account, same cadence — the content mix is the variable.</p>
+        <p><strong>Do:</strong> on TikTok, open with the personal hook (&ldquo;I was medicated for a disease I never had&rdquo;) and push the study citation to the caption or a pinned comment. Keep the citation-forward edit for Instagram, where it&rsquo;s winning reach.</p>
+        <div class="evidence">Evidence: TT interactions 136 → 23 (−83%) · best TT post = thyroid story, 592 views, 42 likes</div>
+      </div>
+      <div class="rec">
+        <h3>Convert the new Instagram reach into followers</h3>
+        <p>2,105 people reached this week converted to just 7 new followers (~0.3%). The content earns the view; the profile isn&rsquo;t closing.</p>
+        <p><strong>Do:</strong> add a spoken &ldquo;follow for the next study&rdquo; line in the last 2 seconds of each reel, and make the bio lead with the outcome (&ldquo;evidence-based strength coaching for perimenopause&rdquo;) rather than the brand name.</p>
+        <div class="evidence">Evidence: reach 2,105 → +7 followers · TikTok converts ~3× better (23 interactions → +8 followers)</div>
+      </div>
+      <div class="rec">
+        <h3>Facebook: keep cross-posting, invest nothing more</h3>
+        <p>Distribution is real (~1,800 video views/week) but inert — 7 interactions all week and zero follower growth. The exception: the creatine video did its best numbers here (519 views), suggesting the FB audience skews toward supplement and bone-density topics.</p>
+        <p><strong>Do:</strong> keep the auto-crosspost. When you have supplement/bone-health content, let Facebook be its home.</p>
+        <div class="evidence">Evidence: FB followers 152 flat · views 1,856 → 1,834 · interactions 25 → 7</div>
+      </div>
+      <div class="rec warn">
+        <h3>Threads: engage, don&rsquo;t just broadcast</h3>
+        <p>Daily posting is not being distributed — most posts get under 20 views, and the &ldquo;comment GUIDE&rdquo; CTA posts get essentially none. The two that traveled (ferritin, 316 views; the tea confession, 192) were practical or personal, not promotional.</p>
+        <p><strong>Do:</strong> swap 3 of the 7 weekly posts for 10 minutes of replying to large women&rsquo;s-health accounts — replies are how Threads distributes new accounts. Keep the protocol-style posts.</p>
+        <div class="evidence">Evidence: 2 followers · weekly views 652 → 192 · CTA posts ≈ 0 views</div>
+      </div>
+      <div class="rec">
+        <h3>YouTube Shorts is free reach you&rsquo;re leaving off</h3>
+        <p>X (2 followers, one tweet, ~0 impressions) and YouTube (1 subscriber, no uploads) are dormant. X can stay parked. YouTube can&rsquo;t: you already produce a vertical video every day, and Shorts is the only one of these surfaces where content keeps earning search views for months.</p>
+        <p><strong>Do:</strong> add YouTube Shorts to the same Metricool cross-post. Zero new production, evergreen upside.</p>
+        <div class="evidence">Evidence: YT 3 video views in 14 days with no uploads · X followers 3 → 2</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>How this dashboard stays current:</strong> it refreshes automatically every morning (7:00 AM Pacific) from your Metricool account, and you can ask Claude to &ldquo;refresh my social dashboard&rdquo; at any moment of any day for an instant update.</p>
+    <p>Sources: Metricool analytics for brand &ldquo;The WELL Co.&rdquo; — Instagram @thewellco.lab, TikTok @kenisha.w, Facebook page, Threads @kenisha.walker8, X @DptKwalker, YouTube channel. Engagement = interactions per 100 people reached (Metricool brand setting).</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var css = getComputedStyle(document.documentElement);
+  function tok(name) { return css.getPropertyValue(name).trim(); }
+
+  var DATES = ["Jun 29","Jun 30","Jul 1","Jul 2","Jul 3","Jul 4","Jul 5","Jul 6","Jul 7","Jul 8","Jul 9","Jul 10","Jul 11","Jul 12","Jul 13"];
+
+  // null = no data recorded that day (rendered as a line gap)
+  var VIEWS = [
+    { name: "Instagram", color: "--s-instagram", data: [120,249,156,72,120,64,4,33,6,356,350,1458,967,null,null] },
+    { name: "Facebook",  color: "--s-facebook",  data: [249,122,308,264,113,787,13,24,2,3,300,287,368,850,null] },
+    { name: "Threads",   color: "--s-threads",   data: [44,316,23,64,null,13,192,10,62,18,1,null,84,17,null] }
+  ];
+
+  var INTERACTIONS = [
+    { name: "TikTok",    color: "--s-tiktok",   emph: true,  data: [18,35,44,27,5,7,null,null,null,null,2,9,10,2,null] },
+    { name: "Instagram", color: "--s-instagram", emph: false, data: [4,13,24,3,5,6,null,null,null,null,4,27,21,4,null] },
+    { name: "Facebook",  color: "--s-facebook",  emph: false, data: [4,2,4,3,2,10,null,null,null,null,null,1,3,3,null] },
+    { name: "Threads",   color: "--s-threads",   emph: false, data: [0,2,0,0,0,0,1,0,0,0,0,0,0,0,null] }
+  ];
+
+  var PLATFORMS = [
+    {
+      name: "Instagram", handle: "@thewellco.lab", color: "--s-instagram",
+      followers: 99, unit: "followers",
+      chip: { cls: "good", txt: "▲ Surging" },
+      spark: [87,88,90,91,91,92,92,93,93,95,96,97,99],
+      stats: [
+        { k: "Followers this wk", v: "+7", good: true },
+        { k: "Reach", v: "2,105", sub: "+306%" },
+        { k: "Engagement", v: "2.7", sub: "per 100 reached" }
+      ]
+    },
+    {
+      name: "TikTok", handle: "@kenisha.w", color: "--s-tiktok",
+      followers: 128, unit: "followers",
+      chip: { cls: "warn", txt: "! Engagement dip" },
+      spark: [113,114,116,119,120,120,120,122,125,126,127,127,128,128],
+      stats: [
+        { k: "Followers this wk", v: "+8", good: true },
+        { k: "Interactions", v: "23", sub: "−83%" },
+        { k: "Engagement", v: "2.3", sub: "was 7.7" }
+      ]
+    },
+    {
+      name: "Facebook", handle: "The WELL Co. page", color: "--s-facebook",
+      followers: 152, unit: "followers",
+      chip: { cls: "neutral", txt: "— Flat" },
+      spark: [150,152,152,152,152,152,152,152,152,152,152,152,152,152],
+      stats: [
+        { k: "Followers this wk", v: "±0" },
+        { k: "Video views", v: "1,834", sub: "−1%" },
+        { k: "Interactions", v: "7", sub: "was 25" }
+      ]
+    },
+    {
+      name: "Threads", handle: "@kenisha.walker8", color: "--s-threads",
+      followers: 2, unit: "followers",
+      chip: { cls: "warn", txt: "! Low traction" },
+      spark: [1,1,1,1,1,1,1,1,1,2,2,2,2,2],
+      stats: [
+        { k: "Followers this wk", v: "+1", good: true },
+        { k: "Post views", v: "192", sub: "was 652" },
+        { k: "Posts", v: "7", sub: "daily" }
+      ]
+    },
+    {
+      name: "X (Twitter)", handle: "@DptKwalker", color: "--s-twitter",
+      followers: 2, unit: "followers",
+      chip: { cls: "neutral", txt: "— Dormant" },
+      spark: [2,2,2,2,2,2,3,3,3,2,2,2,2,2],
+      stats: [
+        { k: "Followers this wk", v: "−1" },
+        { k: "Tweets", v: "1" },
+        { k: "Impressions", v: "0" }
+      ]
+    },
+    {
+      name: "YouTube", handle: "The WELL Co.", color: "--s-youtube",
+      followers: 1, unit: "subscriber",
+      chip: { cls: "neutral", txt: "— Dormant" },
+      spark: [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      stats: [
+        { k: "Uploads", v: "0" },
+        { k: "Video views", v: "3", sub: "in 14 days" },
+        { k: "Opportunity", v: "Shorts" }
+      ]
+    }
+  ];
+
+  function fmt(n) { return n == null ? "—" : n.toLocaleString("en-US"); }
+
+  /* ---------- platform cards ---------- */
+  function sparkline(values, colorVar, w, h) {
+    var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+    if (max === min) { max = min + 1; }
+    var pad = 4;
+    var pts = values.map(function (v, i) {
+      var x = pad + (i / (values.length - 1)) * (w - pad * 2);
+      var y = h - pad - ((v - min) / (max - min)) * (h - pad * 2);
+      return [x, y];
+    });
+    var d = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+    var end = pts[pts.length - 1];
+    var color = "var(" + colorVar + ")";
+    return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + " " + h + '" aria-hidden="true">' +
+      '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<circle cx="' + end[0].toFixed(1) + '" cy="' + end[1].toFixed(1) + '" r="4" fill="' + color + '" stroke="var(--surface)" stroke-width="2"/>' +
+      "</svg>";
+  }
+
+  var cardsHtml = PLATFORMS.map(function (p) {
+    var stats = p.stats.map(function (s) {
+      return '<div class="pstat"><div class="k">' + s.k + '</div><div class="v' + '">' + s.v +
+        (s.sub ? ' <small>' + s.sub + "</small>" : "") + "</div></div>";
+    }).join("");
+    return '<div class="pcard">' +
+      '<div class="top"><span class="dot" style="background:var(' + p.color + ')"></span>' +
+      '<span class="pname">' + p.name + '</span><span class="phandle">' + p.handle + "</span>" +
+      '<span class="chip ' + p.chip.cls + '">' + p.chip.txt + "</span></div>" +
+      '<div class="mid"><div class="bignum"><span class="unit">' + p.unit + "</span>" + fmt(p.followers) + "</div>" +
+      '<div class="spark">' + sparkline(p.spark, p.color, 150, 44) + "</div></div>" +
+      '<div class="pstats">' + stats + "</div></div>";
+  }).join("");
+  document.getElementById("platform-cards").innerHTML = cardsHtml;
+
+  /* ---------- line charts ---------- */
+  function buildLegend(el, series) {
+    el.innerHTML = series.map(function (s) {
+      return '<span class="key"><span class="swatch" style="background:var(' + s.color + ')"></span>' + s.name + "</span>";
+    }).join("");
+  }
+
+  function niceTicks(max, count) {
+    var raw = max / count;
+    var mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10));
+    var step = Math.ceil(raw / mag) * mag;
+    var ticks = [];
+    for (var v = 0; v <= max + step * 0.001; v += step) { ticks.push(v); }
+    if (ticks[ticks.length - 1] < max) { ticks.push(ticks[ticks.length - 1] + step); }
+    return ticks;
+  }
+
+  function lineChart(boxId, series, opts) {
+    var box = document.getElementById(boxId);
+    var W = 1040, H = 260;
+    var m = { top: 14, right: 16, bottom: 30, left: 52 };
+    var iw = W - m.left - m.right, ih = H - m.top - m.bottom;
+    var n = DATES.length;
+
+    var maxV = 0;
+    series.forEach(function (s) { s.data.forEach(function (v) { if (v != null && v > maxV) { maxV = v; } }); });
+    var ticks = niceTicks(maxV, 3);
+    var yMax = ticks[ticks.length - 1];
+
+    function x(i) { return m.left + (i / (n - 1)) * iw; }
+    function y(v) { return m.top + ih - (v / yMax) * ih; }
+
+    var svg = [];
+    svg.push('<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + opts.aria + '">');
+
+    ticks.forEach(function (t) {
+      svg.push('<line x1="' + m.left + '" x2="' + (W - m.right) + '" y1="' + y(t).toFixed(1) + '" y2="' + y(t).toFixed(1) +
+        '" stroke="var(--grid)" stroke-width="1"/>');
+      svg.push('<text x="' + (m.left - 8) + '" y="' + (y(t) + 4).toFixed(1) +
+        '" text-anchor="end" font-size="11" fill="var(--muted)" style="font-variant-numeric:tabular-nums">' + fmt(t) + "</text>");
+    });
+    svg.push('<line x1="' + m.left + '" x2="' + (W - m.right) + '" y1="' + y(0).toFixed(1) + '" y2="' + y(0).toFixed(1) +
+      '" stroke="var(--baseline)" stroke-width="1"/>');
+
+    var tickIdx = [0, 3, 7, 11, 14];
+    tickIdx.forEach(function (i) {
+      svg.push('<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="var(--muted)">' + DATES[i] + "</text>");
+    });
+
+    // divider between prior week and this week
+    var divX = (x(6) + x(7)) / 2;
+    svg.push('<line x1="' + divX.toFixed(1) + '" x2="' + divX.toFixed(1) + '" y1="' + m.top + '" y2="' + (m.top + ih) +
+      '" stroke="var(--grid)" stroke-width="1"/>');
+    svg.push('<text x="' + (divX + 6).toFixed(1) + '" y="' + (m.top + 10) + '" font-size="10" fill="var(--muted)">THIS WEEK</text>');
+
+    series.forEach(function (s) {
+      var color = s.emph === false ? "var(--de-emphasis)" : "var(" + s.color + ")";
+      var width = s.emph === false ? 1.5 : 2;
+      var segs = [], cur = [];
+      s.data.forEach(function (v, i) {
+        if (v == null) { if (cur.length) { segs.push(cur); cur = []; } }
+        else { cur.push([x(i), y(v), i]); }
+      });
+      if (cur.length) { segs.push(cur); }
+      segs.forEach(function (seg) {
+        if (seg.length === 1) {
+          svg.push('<circle cx="' + seg[0][0].toFixed(1) + '" cy="' + seg[0][1].toFixed(1) + '" r="3" fill="' + color + '"/>');
+        } else {
+          var d = seg.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+          svg.push('<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="' + width + '" stroke-linecap="round" stroke-linejoin="round"/>');
+        }
+      });
+      // endpoint dot + selective direct label on the emphasized / labeled series
+      var lastIdx = -1;
+      s.data.forEach(function (v, i) { if (v != null) { lastIdx = i; } });
+      if (lastIdx >= 0 && s.emph !== false) {
+        var lv = s.data[lastIdx];
+        svg.push('<circle cx="' + x(lastIdx).toFixed(1) + '" cy="' + y(lv).toFixed(1) + '" r="4" fill="' + color +
+          '" stroke="var(--surface)" stroke-width="2"/>');
+      }
+    });
+
+    // peak label (one selective direct label)
+    if (opts.peak) {
+      var pk = opts.peak;
+      svg.push('<text x="' + x(pk.i).toFixed(1) + '" y="' + (y(pk.v) - 8).toFixed(1) +
+        '" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink-2)" style="font-variant-numeric:tabular-nums">' + fmt(pk.v) + "</text>");
+    }
+
+    svg.push('<line id="' + boxId + '-cross" y1="' + m.top + '" y2="' + (m.top + ih) + '" x1="-10" x2="-10" stroke="var(--baseline)" stroke-width="1"/>');
+    svg.push("</svg>");
+    box.innerHTML = svg.join("");
+
+    var tt = document.createElement("div");
+    tt.className = "tooltip";
+    box.appendChild(tt);
+
+    var svgEl = box.querySelector("svg");
+    var crossEl = document.getElementById(boxId + "-cross");
+
+    function onMove(clientX, clientY) {
+      var rect = svgEl.getBoundingClientRect();
+      var relX = (clientX - rect.left) / rect.width * W;
+      var i = Math.round((relX - m.left) / iw * (n - 1));
+      i = Math.max(0, Math.min(n - 1, i));
+      crossEl.setAttribute("x1", x(i)); crossEl.setAttribute("x2", x(i));
+      var rows = series.map(function (s) {
+        var v = s.data[i];
+        return '<div class="tt-row"><span class="sw" style="background:var(' + s.color + ')"></span>' +
+          '<span class="nm">' + s.name + '</span><span class="vl">' + fmt(v) + "</span></div>";
+      }).join("");
+      tt.innerHTML = '<div class="tt-date">' + DATES[i] + ", 2026</div>" + rows;
+      tt.style.display = "block";
+      var boxRect = box.getBoundingClientRect();
+      var px = (x(i) / W) * rect.width;
+      var left = px + 14;
+      if (left + tt.offsetWidth > boxRect.width - 4) { left = px - tt.offsetWidth - 14; }
+      tt.style.left = Math.max(4, left) + "px";
+      tt.style.top = Math.max(0, clientY - boxRect.top - tt.offsetHeight - 12) + "px";
+    }
+    svgEl.addEventListener("mousemove", function (e) { onMove(e.clientX, e.clientY); });
+    svgEl.addEventListener("touchmove", function (e) {
+      if (e.touches.length) { onMove(e.touches[0].clientX, e.touches[0].clientY); }
+    }, { passive: true });
+    function hide() { tt.style.display = "none"; crossEl.setAttribute("x1", -10); crossEl.setAttribute("x2", -10); }
+    svgEl.addEventListener("mouseleave", hide);
+    svgEl.addEventListener("touchend", hide);
+  }
+
+  function buildTable(elId, series) {
+    var el = document.getElementById(elId);
+    var head = "<tr><th>Date</th>" + series.map(function (s) { return "<th>" + s.name + "</th>"; }).join("") + "</tr>";
+    var rows = DATES.map(function (d, i) {
+      return "<tr><td>" + d + "</td>" + series.map(function (s) { return "<td>" + fmt(s.data[i]) + "</td>"; }).join("") + "</tr>";
+    }).join("");
+    el.innerHTML = '<table class="data"><thead>' + head + "</thead><tbody>" + rows + "</tbody></table>";
+  }
+
+  buildLegend(document.getElementById("legend-views"), VIEWS);
+  lineChart("chart-views", VIEWS, {
+    aria: "Daily views for Instagram, Facebook and Threads from June 29 to July 13, 2026. Instagram peaked at 1,458 views on July 10.",
+    peak: { i: 11, v: 1458 }
+  });
+  buildTable("table-views", VIEWS);
+
+  buildLegend(document.getElementById("legend-int"), INTERACTIONS);
+  lineChart("chart-int", INTERACTIONS, {
+    aria: "Daily interactions with TikTok highlighted, June 29 to July 13, 2026. TikTok peaked at 44 on July 1 and fell to single digits in the second week.",
+    peak: { i: 2, v: 44 }
+  });
+  buildTable("table-int", INTERACTIONS);
+})();
+</script>
